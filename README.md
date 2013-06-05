@@ -2,12 +2,12 @@ Free Perfect Email Server - Detailed Tutorial
 ===========================================
 This tutorial covers all the details steps for creating your own custom email server using a Virtual Private Server running Ubuntu 12.10 x64 with iRedMail 0.8.4, iRedAdmin, PostgreSQL, Roundcubemail, Awstats, Apache and SSL Certificates.
 -------------------------------------------
-_I used [Digital Ocean SSD VPS](https://www.digitalocean.com/?refcode=297ac3dfc7bf) for this tutorial. (Included in this tutorial is a coupon[^1] for 2 months of free service.)_ 
+_I used [Digital Ocean SSD VPS](http://url.phsrvr.com/stats/&url=T1rqd) for this tutorial. (Included in this tutorial is a coupon for 2 months of free service.)_ 
 
 If you already have a perfectly configured server, you can skip to: 'Install iRedMail'.
 - - - 
 ###Create a Droplet (aka VPS)
-####I highly recommend using [Digital Ocean SSD VPS]( ) for this setup. If you are creating a new account, use [this coupon](#fn:1) for 2 months of free service.
+####I highly recommend using [Digital Ocean SSD VPS](http://url.phsrvr.com/stats/&url=T1rqd) for this setup. If you are creating a new account, use the coupon `SSDPOWER` for 2 months of free service.
 After creating a new account, click `Create Droplet`  
     * [Screen Shot of Creating a Droplet via Digial Ocean](http://grab.by/n7w6)
 
@@ -279,4 +279,3 @@ After all of that, you finally get to use your email server for personal email, 
 2. Mail Client
     * _Coming Soon_
 
-[^1]: Coupon Code: SSDPOWER
