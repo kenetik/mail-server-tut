@@ -258,7 +258,7 @@ _This is my personal preference, it's only given me problems in the past_
 		    Mailbox Quota [0-99999] 
 
 		+ _Determine Mailbox Quota depending on the user of the account, and your server's storage space (Thankfully DigitalOcean is resizable!)_
-        + [Screen Shot of New User Preferences](=http://grab.by/n7JY])
+        + [Screen Shot of New User Preferences](http://grab.by/n7JY)
 
 You just created your first email account on your new server!
 - - -
