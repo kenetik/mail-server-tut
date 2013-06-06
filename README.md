@@ -2,12 +2,14 @@ Free Perfect Email Server - Detailed Tutorial
 ===========================================
 This tutorial covers all the details steps for creating your own custom email server using a Virtual Private Server running Ubuntu 12.10 x64 with iRedMail 0.8.4, iRedAdmin, PostgreSQL, Roundcubemail, Awstats, Apache and SSL Certificates.
 -------------------------------------------
-_I used [Digital Ocean SSD VPS](http://url.phsrvr.com/stats/&url=T1rqd) for this tutorial. (Included in this tutorial is a coupon for 2 months of free service.)_ 
+- - -
+_I used [Digital Ocean SSD VPS](http://url.phsrvr.com/T1rqd) for this tutorial. (Included in this tutorial is a coupon for 2 months of free service.)_ 
 
 If you already have a perfectly configured server, you can skip to: 'Install iRedMail'.
-- - - 
+- - -
+[README.md on GitHub](https://github.com/kenetik/mail-server-tut/blob/master/README.md) 
 ###Create a Droplet (aka VPS)
-####I highly recommend using [Digital Ocean SSD VPS](http://url.phsrvr.com/stats/&url=T1rqd) for this setup. If you are creating a new account, use the coupon `SSDPOWER` for 2 months of free service.
+####I highly recommend using [Digital Ocean SSD VPS](http://url.phsrvr.com/T1rqd) for this setup. If you are creating a new account, use the coupon `SSDPOWER` for 2 months of free service.
 After creating a new account, click `Create Droplet`  
     * [Screen Shot of Creating a Droplet via Digial Ocean](http://grab.by/n7w6)
 
@@ -34,7 +36,7 @@ From my tests 2GB/2CPUS/40GBSSD configuration works the best, but for trial and 
   * Enter the random password generated during droplet creation. You should now be logged into your server and see something similar to this: 
         + [Screenshot of Successful Server Login](http://grab.by/n7xI) 
     * __It is very important__ to now change the password to something secure of your choice. At the command prompt type the following command: 
-	    + ```
+        + ```
           passwd
           ```
         + [Screenshot of Password Change](http://grab.by/n7xM)
@@ -141,7 +143,7 @@ _This is the magic software and step for all users_
 		    + [Screen Shot of Optional Component](http://grab.by/n7AI)
 	* _The selected configurations are complete. Take note, we'll need to move /tmp/iRedMail/config later_
     * Type `Y` to continue
-        + [Screen Shot of ?](http://grab.by/n7AO)
+        + [Screen Shot of Configuration Completion](http://grab.by/n7AO)
 	* iRedMail will begin downloading and installing required files. (_Approximately ~2 minutes_) 
 3. iRedMail will prompt for firewall rules:
     * Select 'N'
@@ -195,23 +197,18 @@ _For tutorial purposes we will use [InstantSLL](http://www.instantssl.com/ssl-ce
     
                 smtpd_tls_cert_file = /etc/ssl/mail_yourdomain_com.crt 
                 and 
-                smtpd_tls_key_file = /etc/ssl/mail.yourdomain.com.key
-                
-                
-        + Use `Ctrl+X` and `Y + Enter` to save the adjustments
-        
+                smtpd_tls_key_file = /etc/ssl/mail.yourdomain.com.key  
+
 	* Dovecot: `nano /etc/postfix/main.cf`
         + [Screen Shot of Dovecot main.cf](http://grab.by/n8GQ)
 		+ Under # SSL: Global settings change: 
-
 
                 ssl = required 
                 verbose_ssl = yes 
                 (this is optional, but added for debug help) and, 
                 ssl_cert = </etc/ssl/mail_yourdomain_com.crt 
                 ssl_key = </etc/ssl/mail.yourdomain.com.key  
-
-
+        
         + Use `Ctrl+X` and `Y + Enter` to save the adjustments
 
 7. Reboot by issuing the command `reboot`
@@ -278,4 +275,3 @@ After all of that, you finally get to use your email server for personal email, 
 
 2. Mail Client
     * _Coming Soon_
-
