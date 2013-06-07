@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Mail-server-tut : Setup Free Mail Server Tutorial" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Mail-server-tut</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/kenetik/mail-server-tut">View on GitHub</a>
+
+          <h1 id="project_title">Mail-server-tut</h1>
+          <h2 id="project_tagline">Setup Free Mail Server Tutorial</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/kenetik/mail-server-tut/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/kenetik/mail-server-tut/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="free-perfect-email-server---detailed-tutorial" class="anchor" href="#free-perfect-email-server---detailed-tutorial"><span class="octicon octicon-link"></span></a>Free Perfect Email Server - Detailed Tutorial</h1>
+
+<h2>
+<a name="this-tutorial-covers-all-the-details-steps-for-creating-your-own-custom-email-server-using-a-virtual-private-server-running-ubuntu-1210-x64-with-iredmail-084-iredadmin-postgresql-roundcubemail-awstats-apache-and-ssl-certificates" class="anchor" href="#this-tutorial-covers-all-the-details-steps-for-creating-your-own-custom-email-server-using-a-virtual-private-server-running-ubuntu-1210-x64-with-iredmail-084-iredadmin-postgresql-roundcubemail-awstats-apache-and-ssl-certificates"><span class="octicon octicon-link"></span></a>This tutorial covers all the details steps for creating your own custom email server using a Virtual Private Server running Ubuntu 12.10 x64 with iRedMail 0.8.4, iRedAdmin, PostgreSQL, Roundcubemail, Awstats, Apache and SSL Certificates.</h2>
+
+<hr><p><em>I used <a href="http://url.phsrvr.com/T1rqd">Digital Ocean SSD VPS</a> for this tutorial. (Included in this tutorial is a coupon for 2 months of free service.)</em> </p>
+
+<p>If you already have a perfectly configured server, you can skip to: 'Install iRedMail'.</p>
+
+<hr><p><a href="https://github.com/kenetik/mail-server-tut/blob/master/README.md">README.md on GitHub</a> </p>
+
+<h3>
+<a name="create-a-droplet-aka-vps" class="anchor" href="#create-a-droplet-aka-vps"><span class="octicon octicon-link"></span></a>Create a Droplet (aka VPS)</h3>
+
+<h4>
+<a name="i-highly-recommend-using-digital-ocean-ssd-vps-for-this-setup-if-you-are-creating-a-new-account-use-the-coupon-ssdpower-for-2-months-of-free-service" class="anchor" href="#i-highly-recommend-using-digital-ocean-ssd-vps-for-this-setup-if-you-are-creating-a-new-account-use-the-coupon-ssdpower-for-2-months-of-free-service"><span class="octicon octicon-link"></span></a>I highly recommend using <a href="http://url.phsrvr.com/T1rqd">Digital Ocean SSD VPS</a> for this setup. If you are creating a new account, use the coupon <code>SSDPOWER</code> for 2 months of free service.</h4>
+
+<p>After creating a new account, click <code>Create Droplet</code><br>
+    * <a href="http://grab.by/n7w6">Screen Shot of Creating a Droplet via Digial Ocean</a></p>
+
+<ol>
+<li><p>Assign hostname (for this tutorial I will be using mail.yourdomain.com)
+From my tests 2GB/2CPUS/40GBSSD configuration works the best, but for trial and error we will use the smallest configuration.
+<a href="http://grab.by/n7wa">Screen Shot of Assigning Hostname</a></p></li>
+<li>
+<p>Select Region - <em>This is based on your location, or potenial users location.</em> I chose San Francisco </p>
+
+<ul>
+<li>Select Image - <em>We will be using Ubuntu 12.10 x64 for this tutorial.</em> 
+
+<ul>
+<li><a href="http://grab.by/n7wE">Screen Shot of Selecting Image and Location</a></li>
+</ul>
+</li>
+<li>Click Create Droplet - You will be greeted with a message about your droplet being created. (Wait approximately 60 seconds, usual much less.) You will be automatically redirected to your droplet upon it's creation. Check your email for the root password.
+
+<ul>
+<li><a href="http://grab.by/n7wK">Screen Shot of Create Button</a></li>
+<li><a href="http://grab.by/n7wU">Screenshot of Droplet After Creation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Change your server's password</p>
+
+<ul>
+<li>Login to your server using a SSH Client (PuTTY/Terminal/Digital Ocean's Console Access) with the details given from the email. In your SSH Client type the following command:
+
+<ul>
+<li>
+<code>
+ssh root@yourip
+</code>
+* You will be prompted about a RSA key fingerprint. Type 'yes' as the prompt. 
++ <code>
+yes
+</code>
+</li>
+<li>
+<a href="http://grab.by/n7xw">Screenshot of RSA Prompt</a> </li>
+</ul>
+</li>
+<li>Enter the random password generated during droplet creation. You should now be logged into your server and see something similar to this: 
+
+<ul>
+<li>
+<a href="http://grab.by/n7xI">Screenshot of Successful Server Login</a> </li>
+</ul>
+</li>
+<li>
+<strong>It is very important</strong> to now change the password to something secure of your choice. At the command prompt type the following command: 
+
+<ul>
+<li>
+<code>
+passwd
+</code>
++ <a href="http://grab.by/n7xM">Screenshot of Password Change</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Reboot your server by typing the following command:</p></li>
+</ol><p>Now your in! Let's start configuring!</p>
+
+<hr><h3>
+<a name="setup-2gb-of-swap-memory" class="anchor" href="#setup-2gb-of-swap-memory"><span class="octicon octicon-link"></span></a>Setup 2GB of Swap Memory</h3>
+
+<p><em>This helps with server stability and is optional but __highly recommended</em>_._</p>
+
+<ol>
+<li>Login back into your server and type the following command:
+
+<ul>
+<li>
+<code>
+dd if=/dev/zero of=/swap bs=1024 count=2097152
+mkswap /swap &amp;&amp; chown root. /swap &amp;&amp; chmod 0600 /swap &amp;&amp; swapon /swap
+echo /swap swap swap defaults 0 0 &gt;&gt; /etc/fstab
+echo vm.swappiness = 0 &gt;&gt; /etc/sysctl.conf &amp;&amp; sysctl -p
+</code>
++ <a href="http://grab.by/n7yI">Screen Shot of Command</a>
+2. Check to make sure your swap file is active by typing the following command:
+* <code>
+free -m
+</code>
+will show Swap: 2047
+
+<ul>
+<li><a href="http://grab.by/n7yO">Screen Shot of Swap: 2047 Displayed</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol><p>Swap (virtual ram) is setup!</p>
+
+<hr><h3>
+<a name="set-your-domains-dns-via-digital-oceans-control-panel" class="anchor" href="#set-your-domains-dns-via-digital-oceans-control-panel"><span class="octicon octicon-link"></span></a>Set your domain's DNS via Digital Ocean's Control Panel</h3>
+
+<p><em>Please ensure that your domain's dns are forwarding to your server if you are not using Digital Ocean</em></p>
+
+<ol>
+<li>Add a domain to your account by visiting <a href="https://www.digitalocean.com/domains">Digital Ocean's Domain Control Panel</a> | <a href="http://grab.by/n7z2">Screen Shot of DCP</a>
+
+<ol>
+<li>Click the [Add Domain] button</li>
+<li>Input your domain, droplet's ip address, and select your droplet.
+
+<ul>
+<li><a href="http://grab.by/n7z8">Screen Shot of Domain Inout</a></li>
+</ul>
+</li>
+<li>Click the [Create Domain] button. You should see 'Domain was successfully created'.</li>
+<li>Click the [Add Record] button
+
+<ul>
+<li>Select MX as the Record Type</li>
+<li>In Hostname input:
+
+<ul>
+<li>
+<code>mail.yourdomain.com.</code> <em>Ensure the trailing <code>.</code> after your domain.</em>
+</li>
+</ul>
+</li>
+<li>In Priority</li>
+<li>You also want to add a CNAME record for 'mail', '@'. <em>This may seem a little redundant, but it ensures SSL Certification ease later.</em>
+
+<ul>
+<li><code>10</code></li>
+</ul>
+</li>
+<li>Click the [CREATE] button
+
+<ul>
+<li><a href="http://grab.by/n7IM">Screen Shot of Domain Information Input</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol><p>DNS is set!</p>
+
+<hr><h3>
+<a name="ensure-vps-is-updated" class="anchor" href="#ensure-vps-is-updated"><span class="octicon octicon-link"></span></a>Ensure VPS is Updated</h3>
+
+<p><em>Again, if this is a pre-configured VPS and you now everything is good to go, you may skip this step, but is still recommended</em></p>
+
+<ol>
+<li>From your SSH Client use the following command:
+
+<ul>
+<li>
+<code>apt-get update</code>
+
+<ul>
+<li><a href="http://grab.by/n7zG">Screen Shot of Update Results</a></li>
+<li>and then this command</li>
+</ul>
+</li>
+<li>
+<code>apt-get upgrade</code>
+
+<ul>
+<li>Depending on how many items need to be updated, you will see something similar to the following screenshot and be prompted to continue. Type <code>Y</code>, and your server will begin updating.</li>
+<li>
+<a href="http://grab.by/n7zO">Screen Shot of Update Process</a><br>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol><p>Your up to date!</p>
+
+<hr><h3>
+<a name="set-your-fully-qualified-domain-name-fqdn" class="anchor" href="#set-your-fully-qualified-domain-name-fqdn"><span class="octicon octicon-link"></span></a>Set your Fully Qualified Domain Name (FQDN)</h3>
+
+<p><em>If its already set, it would be a good idea to confirm it</em></p>
+
+<ol>
+<li>Edit the hosts file by typing the following command:
+
+<ul>
+<li>
+<code>nano /etc/hosts</code>
+
+<ul>
+<li><a href="http://grab.by/n7A2">Screen Shot of the Hosts file via Nano</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Change the default line to:
+
+<ul>
+<li><code>127.0.0.1 mail.yourdomain.com mail localhost</code></li>
+<li>
+<em>You can verify this by rebooting, and typing:</em>
+
+<ul>
+<li><code>hostname -f</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol><p>Your FDQN is now set!</p>
+
+<hr><h3>
+<a name="install-iredmail" class="anchor" href="#install-iredmail"><span class="octicon octicon-link"></span></a>Install iRedMail</h3>
+
+<p><em>This is the magic software and step for all users</em></p>
+
+<ol>
+<li>From the command prompt type the following command:
+
+<ul>
+<li><code>cd /tmp
+wget https://bitbucket.org/zhb/iredmail/downloads/iRedMail-0.8.4.tar.bz2
+tar jxvf iRedMail-0.8.4.tar.bz2
+rm iRedMail-0.8.4.tar.bz2
+mv iRedMail-0.8.4 iRedMail
+cd iRedMail
+bash iRedMail.sh</code></li>
+<li>Your server will begin installing requirements. </li>
+</ul>
+</li>
+<li>Once you see the screen 'Welcome and thank you for your use':
+
+<ul>
+<li>Select: 'Yes'
+
+<ul>
+<li><a href="http://grab.by/n7Aa">Screen Shot of iRedMail Welcome Screen</a></li>
+</ul>
+</li>
+<li><em>/var/vmail is the default storage path, and what I use</em></li>
+<li>Select: 'Next'
+
+<ul>
+<li><a href="http://grab.by/n7Ac">Screen Shot of Default Storage Path</a></li>
+</ul>
+</li>
+<li>Select PostgreSQL with your arrow keys and the spacebar, then 'Next'
+
+<ul>
+<li><a href="http://grab.by/n7Ak">Sceen Shot of Selecting Database Manager(PostgreSQL)</a></li>
+</ul>
+</li>
+<li>Enter a password for your PostgreSQL admin (_you'll need this later_)
+
+<ul>
+<li>
+<code>password</code>, then 'Next'
+
+<ul>
+<li><a href="http://grab.by/n7Ao">Screen Shot of Password Choice</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Enter your first virtual domain name, <code>yourdomain.com</code>, then 'Next'
+
+<ul>
+<li><a href="http://grab.by/n7Au">Screen Shot of Virtual Domain Name</a></li>
+</ul>
+</li>
+<li>Enter a password for your administrator account (_you'll need this later, and will eventually will need to change it_)
+
+<ul>
+<li>
+<code>password</code>, then 'Next'
+
+<ul>
+<li><a href="http://grab.by/n7AC">Screen Shot of Admin Password</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Select optional components:
+
+<ul>
+<li>Fail2ban, and phpPGAdmin are optional, I am chosing to install phpPgAdmin and not Fail2Ban, the rest are required for this tutorial, then 'Next'
+
+<ul>
+<li><a href="http://grab.by/n7AI">Screen Shot of Optional Component</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><em>The selected configurations are complete. Take note, we'll need to move /tmp/iRedMail/config later</em></li>
+<li>Type <code>Y</code> to continue
+
+<ul>
+<li><a href="http://grab.by/n7AO">Screen Shot of Configuration Completion</a></li>
+</ul>
+</li>
+<li>iRedMail will begin downloading and installing required files. (_Approximately ~2 minutes_) </li>
+</ul>
+</li>
+<li>iRedMail will prompt for firewall rules:
+
+<ul>
+<li>Select 'N'</li>
+<li>iRedMail is now installed, <em>take note of the url's given</em>
+
+<ul>
+<li><a href="http://grab.by/n7B8">Screen Shot of Installed Configuration</a></li>
+</ul>
+</li>
+<li>Open iRedMail.tips for configuration specifics by typing the following command:
+
+<ul>
+<li>
+<code>nano /tmp/iRedMail/iRedMail.tips</code> (_Save this information incase you don't receive the email_)</li>
+</ul>
+</li>
+<li>Now reboot and log back in!
+
+<ul>
+<li><code>reboot</code></li>
+<li><a href="http://grab.by/n7Bi">Screen Shot of Reboot</a></li>
+<li><em>Upon reboot, you should notice "You have mail."</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol><p>You've just installed iRedMail! Feel accomplished yet?</p>
+
+<hr><h3>
+<a name="create-a-secure-ssl-certificate" class="anchor" href="#create-a-secure-ssl-certificate"><span class="octicon octicon-link"></span></a>Create a Secure SSL Certificate</h3>
+
+<p><em>For tutorial purposes we will use <a href="http://www.instantssl.com/ssl-certificate-products/free-ssl-certificate.html">InstantSLL</a> for a free certificate</em></p>
+
+<ol>
+<li>
+<p>Create a Certificate Signing Request by typing the following command:</p>
+
+<ul>
+<li>
+<pre><code>cd /etc/ssl
+openssl req -out mail.yourdomain.com.csr -new -newkey rsa:2048 -nodes -keyout mail.yourdomain.com.key
+</code></pre>
+
+<ul>
+<li>You will be prompted for information about your certificate, fill them out as requested. The 'extra' attributes are not required (Do not give a challenge password)</li>
+<li><a href="http://grab.by/n7DA">Screen Shot of Certificate Information</a></li>
+<li>Open your Certificate Signing Request by typing the following command:</li>
+<li>
+<code>nano mail.yourdomain.com.csr</code><br>
+</li>
+<li>
+<a href="http://grab.by/n7DQ">Screen Shot of CSR Results</a> <em>I have removed some information and replaced it with *'s for security purposes</em>
+</li>
+<li>Copy all of the information located here, into the CSR Box from InstantSSL.</li>
+<li>Select Apache-ModSSL from the server software drop-down, uncheck Opt in? Then click 'Next &gt;'</li>
+<li><a href="http://grab.by/n7E4">Screen Shot of CSR Box @ InstantSSL</a></li>
+<li>After <a href="http://www.instantssl.com/ssl-certificate-products/free-ssl-certificate.html">InstantSLL</a> validates your request (more steps) you will receive a .zip containing two files. <a> mail_yourdomain_com.ca-bundle and mail_yourdomain_com.crt</a>) <em>To rush the validation, you can log into the comodo account you created and download the .zip of certificate files from your account panel.</em>
+</li>
+<li>Place both of these files in /etc/ssl on your server</li>
+<li>After unzipping the document, open each file with your favorite text editor.</li>
+<li>Copy and paste the information in each file into the same file name on your server.</li>
+<li>Modify Apache's default-ssl to reflect these SSL Certificates</li>
+<li>Type the following command <code>nano /etc/apache2/sites-available/default-ssl</code>
+</li>
+<li>
+<p>Replace the default information so that the following is set</p>
+
+<pre><code>SSLCertificateFile /etc/ssl/mail_yourdomain_com.crt
+SSLCertificateKeyFile /etc/ssl/mail.yourdomain.com.key
+SSLCACertificateFile /etc/ssl/mail_yourdomain_com.ca-bundle
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<em>Please ensure to remove the <code>#</code> before SSLCACertificateFile and do not place the <code>&gt;&gt;</code> in the file, as these are indicators for your benefit</em>
+
+<ul>
+<li><a href="http://grab.by/n7HC">Screen Shot of Default-SSL Configuration</a></li>
+<li>Use <code>Ctrl+X</code> and <code>Y + Enter</code> to save the adjustments</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol><ol>
+<li>
+<p>Modify Postfix and Dovecot's configuration files</p>
+
+<ul>
+<li>
+<p>Postfix: <code>nano /etc/postfix/main.cf</code></p>
+
+<ul>
+<li><a href="http://grab.by/n8Gw">Screen Shot of Postfix main.cf</a></li>
+<li>
+<p>Under #TLS Parameters change: </p>
+
+<pre><code>smtpd_tls_cert_file = /etc/ssl/mail_yourdomain_com.crt 
+and 
+smtpd_tls_key_file = /etc/ssl/mail.yourdomain.com.key  
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol><pre><code>* Dovecot: `nano /etc/postfix/main.cf`
+    + [Screen Shot of Dovecot main.cf](http://grab.by/n8GQ)
+    + Under # SSL: Global settings change: 
+
+            ssl = required 
+            verbose_ssl = yes 
+            (this is optional, but added for debug help) and, 
+            ssl_cert = &lt;/etc/ssl/mail_yourdomain_com.crt 
+            ssl_key = &lt;/etc/ssl/mail.yourdomain.com.key  
+
+    + Use `Ctrl+X` and `Y + Enter` to save the adjustments
+</code></pre>
+
+<ol>
+<li>
+<p>Reboot by issuing the command <code>reboot</code></p>
+
+<ul>
+<li><a href="http://grab.by/n8GW">Screen Shot of Reboot</a></li>
+</ul>
+</li>
+<li><p>Verify your SSL is working by visiting <a href="https://mail.yourdomain.com">https://mail.yourdomain.com</a>
+<em>Depending on which browser/OS you are using, you will see a lock icon next to your URL similar to the screenshot</em>  <a href="http://grab.by/n7J4">Screen Shot of SSL Secured Page</a></p></li>
+</ol><p>You have your very own SSL Secured Address!</p>
+
+<hr><h3>
+<a name="configure-iredadmin-accounts" class="anchor" href="#configure-iredadmin-accounts"><span class="octicon octicon-link"></span></a>Configure iRedAdmin Accounts</h3>
+
+<ol>
+<li>Login to iRedAdmin and configure accounts
+
+<ul>
+<li><a href="https://mail.yourdomain.com/iRedAdmin">https://mail.yourdomain.com/iRedAdmin</a></li>
+<li>Username:<code>postmaster@yourdomain.com</code> and Password: <code>password</code> (_or whatever you set earlier, located in iRedMail.tips_) then click [Login]
+
+<ul>
+<li><em>This is your main mail server admin panel or configuration portal</em></li>
+<li><a href="http://grab.by/n7Je">Screen Shot of Login Screen</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Change your password! 
+
+<ul>
+<li>Click Preferences in the top right, then select Password to the right of General
+
+<ul>
+<li><a href="http://grab.by/n7Js">Screen Shot of Preferences</a></li>
+<li>After changing your password, I would also recommend removing your Mailbox Quota [0] and changing your User ID to [admin] or your preference</li>
+<li><a href="http://grab.by/n7Jw">Screen Shot of Preferences Settings</a></li>
+<li>Logout and back in</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Disable Greylisting!
+<em>This is my personal preference, it's only given me problems in the past</em>
+
+<ul>
+<li>iRedAPD (aka Cluebringer)</li>
+<li>Go to <a href="https://mail.yourdomain.com/cluebringer/greylisting-main.php">https://mail.yourdomain.com/cluebringer/greylisting-main.php</a>
+
+<ul>
+<li>It will prompt for a Username and Password. This is the same as your postmaster address (eg. <a href="mailto:postmaster@yourdomain.com">postmaster@yourdomain.com</a>:password)
+
+<ul>
+<li><a href="http://grab.by/n7Lu">Screen Shot of Cluebringer Login</a></li>
+<li>Once here, select Default Inbound, Action &gt;&gt; Delete</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Disable Policies
+<em>Also personal preferene</em>
+</li>
+<li>Go to <a href="https://mail.yourdomain.com/cluebringer/policy-main.php">https://mail.yourdomain.com/cluebringer/policy-main.php</a> 
+
+<ul>
+<li>Select the policy of your choice (Action Change)</li>
+<li>On the policy edit page, Disable &lt; Yes</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Create a new email address.</p>
+
+<ul>
+<li>Return to <a href="https://mail.yourdomain.com">https://mail.yourdomain.com</a> and login</li>
+<li>
+<p>Select [+Add...] &gt; &gt;User</p>
+
+<pre><code>Mail Address* [anythingyouwish]@[yourdomain.com]
+New password* [********]
+Confirm new password [********]
+Display Name [not required but suggested]
+Mailbox Quota [0-99999] 
+</code></pre>
+
+<ul>
+<li><em>Determine Mailbox Quota depending on the user of the account, and your server's storage space (Thankfully DigitalOcean is resizable!)</em></li>
+<li><a href="http://grab.by/n7JY">Screen Shot of New User Preferences</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol><p>You just created your first email account on your new server!</p>
+
+<hr><h3>
+<a name="using-your-new-email" class="anchor" href="#using-your-new-email"><span class="octicon octicon-link"></span></a>Using your new email!</h3>
+
+<p>After all of that, you finally get to use your email server for personal email, or professional!</p>
+
+<ol>
+<li>
+<p>Webmail Access</p>
+
+<ul>
+<li>
+<a href="https://mail.yourdomain.com">https://mail.yourdomain.com</a> <em>This is the url for you to be able to access your e-mail from any web-enabled device!</em>
+
+<ul>
+<li>Enter the Username and Password you just created
+
+<ul>
+<li><a href="http://grab.by/n7K0">Screen Shot of L/P For Webmain Access</a></li>
+</ul>
+</li>
+<li>You should now be welcomed by a beautiful roundcube webmail user interface.
+
+<ul>
+<li><a href="http://grab.by/n7K2">Screen Shot of Roundcube Webmail</a></li>
+</ul>
+</li>
+<li>From this point I typically like to test the send/receive functions.
+
+<ul>
+<li>Select Compose +, to create a new message to whomever you like.
+
+<ul>
+<li>Before sending, open your SSH client with the following command: <code>tail -f mail.log mail.err</code> for debugging!</li>
+<li>I would also suggest doing the same by sending an email to your new account from another email address.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Mail Client</p>
+
+<ul>
+<li><em>Coming Soon</em></li>
+</ul>
+</li>
+</ol>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Mail-server-tut maintained by <a href="https://github.com/kenetik">kenetik</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-41555140-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
