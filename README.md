@@ -1,6 +1,6 @@
 Free Perfect Email Server - Detailed Tutorial
 ===========================================
-This tutorial covers all the details steps for creating your own custom email server using a Virtual Private Server running Ubuntu 12.10 x64 with iRedMail 0.8.4, iRedAdmin, PostgreSQL, Roundcubemail, Awstats, Apache and SSL Certificates.
+This tutorial covers all the detailed steps for creating your own custom free email server using a Virtual Private Server running Ubuntu 12.10 x64 with iRedMail 0.8.4, iRedAdmin, PostgreSQL, Roundcubemail, Awstats, Apache and SSL Certificates.
 -------------------------------------------
 - - -
 _I used [Digital Ocean SSD VPS](http://url.phsrvr.com/T1rqd) for this tutorial. (Included in this tutorial is a coupon for 2 months of free service.)_ 
